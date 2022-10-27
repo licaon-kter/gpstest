@@ -49,10 +49,9 @@ import com.android.gpstest.util.CarrierFreqUtils
 import com.android.gpstest.util.MathUtils
 import com.android.gpstest.util.PreferenceUtils
 import com.android.gpstest.util.PreferenceUtils.gnssFilter
+import com.android.library.LocationLabelAndData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
-@ExperimentalFoundationApi
 @Composable
 fun StatusScreen(viewModel: SignalInfoViewModel) {
     //
@@ -83,6 +82,11 @@ fun StatusScreen(viewModel: SignalInfoViewModel) {
                 fixState)
             if (gnssFilter().isNotEmpty()) {
                 Filter(allStatuses.size, satelliteMetadata) { PreferenceUtils.clearGnssFilter() }
+            }
+            Column {
+                for (i in LocationLabelAndData.statusSample) {
+                    LocationValue(text = i)
+                }
             }
             GnssStatusCard(gnssStatuses)
             SbasStatusCard(sbasStatuses)
