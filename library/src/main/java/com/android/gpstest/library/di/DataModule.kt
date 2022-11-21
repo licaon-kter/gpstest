@@ -9,8 +9,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.GlobalScope
 import javax.inject.Singleton
+import kotlinx.coroutines.GlobalScope
 
 /**
  * Configuration for DI on the repository and shared location manager
@@ -25,10 +25,17 @@ object DataModule {
     ):SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Provides
+    fun provideContext(
+        @ApplicationContext context: Context,
+    ): Context {
+        return context
+    }
+
+    @Provides
     @Singleton
     fun provideSharedLocationManager(
         @ApplicationContext context: Context,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
     ): SharedLocationManager =
         SharedLocationManager(context, GlobalScope, prefs)
 
@@ -36,7 +43,7 @@ object DataModule {
     @Singleton
     fun provideSharedGnssStatusManager(
         @ApplicationContext context: Context,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
     ): SharedGnssStatusManager =
         SharedGnssStatusManager(context, GlobalScope, prefs)
 
@@ -44,7 +51,7 @@ object DataModule {
     @Singleton
     fun provideSharedNmeaManager(
         @ApplicationContext context: Context,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
     ): SharedNmeaManager =
         SharedNmeaManager(context, GlobalScope, prefs)
 
@@ -52,7 +59,7 @@ object DataModule {
     @Singleton
     fun provideSharedSensorManager(
         prefs: SharedPreferences,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): SharedSensorManager =
         SharedSensorManager(prefs, context, GlobalScope)
 
@@ -60,7 +67,7 @@ object DataModule {
     @Singleton
     fun provideSharedNavMessageManager(
         @ApplicationContext context: Context,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
     ): SharedNavMessageManager =
         SharedNavMessageManager(context, GlobalScope, prefs)
 
@@ -68,7 +75,7 @@ object DataModule {
     @Singleton
     fun provideSharedMeasurementsManager(
         prefs: SharedPreferences,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): SharedGnssMeasurementManager =
         SharedGnssMeasurementManager(prefs, context, GlobalScope)
 
@@ -76,7 +83,7 @@ object DataModule {
     @Singleton
     fun provideSharedAntennaManager(
         @ApplicationContext context: Context,
-        prefs: SharedPreferences
+        prefs: SharedPreferences,
     ): SharedAntennaManager =
         SharedAntennaManager(context, GlobalScope,prefs)
 }
